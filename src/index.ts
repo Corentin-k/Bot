@@ -1,6 +1,6 @@
 import * as dotenv from "dotenv";
 dotenv.config();
-
+efzfez
 
 import { Client, Collection } from "discord.js";
 
