@@ -20,18 +20,18 @@ module.exports = {
     },
   ],
   runSlash: async (client: Client, interaction: CommandInteraction) => {
-   
+    await  interaction.deferReply({ ephemeral: true });
       // Récupère les valeurs des options 'name' et 'date' depuis l'interaction
     let NOM = interaction.options.getString("name") as string;
     let DATE = interaction.options.getString("date") ?? "";
     
     NOM=NOM.toLowerCase();
-
+   
     // Vérifie si l'interaction se déroule dans un canal spécifique
     if (!interaction.channel || interaction.channelId !== process.env.BOT_PLANNING_CHANNEL) {
-        return interaction.reply({
+        return interaction.editReply({
           content: "Vous ne pouvez pas utiliser cette commande dans ce salon !",
-          ephemeral: true,
+          
         });
       }
     console.log(NOM);
@@ -40,9 +40,9 @@ module.exports = {
     if (NOM!== "corentin") {
       if (NOM !== "maxime" ) {
         if (NOM !== "kevin") {
-          return interaction.reply({
+          return interaction.editReply({
             content: "Vous devez entrer le nom d'une personne !",
-            ephemeral: true,
+        
        });
       }
      }
@@ -57,15 +57,15 @@ module.exports = {
       url = process.env.KEVIN;
     } else {
       const message = "Syntaxe invalide. Le prénom est incorrecte";
-      return  interaction.reply({ content: message, ephemeral: true });
+      return  interaction.editReply({ content: message});
     }
 
     console.log(url);
     if (!url) {
         const message = "URL non définie";
-        return interaction.reply({ 
+        return interaction.editReply({ 
           content: message, 
-          ephemeral: true, 
+         
         });
       }
 
@@ -86,10 +86,10 @@ module.exports = {
     if (liste_cours.length === 0) {
       const message = `${NOM} n'a pas de cours le ${DATE} 🎉`;
       console.log(message);
-
-      return interaction.reply({
+     
+      return interaction.editReply({
         content: message,
-        ephemeral: true
+
       });
   
     }
@@ -121,7 +121,7 @@ module.exports = {
     );
     console.log(liste_cours.length);
     affichage.setFooter({ text: `Vous avez un total de ${liste_cours.length} cours aujourd'hui` });
-   
-    await interaction.reply({ embeds: [affichage], ephemeral: false, });
+
+    await interaction.editReply({ embeds: [affichage]});
     },
 }
