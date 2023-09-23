@@ -1,5 +1,5 @@
-import { Client, CommandInteraction, MessageEmbed } from "discord.js";
-import { get_agenda, transfo_date, date_cours } from "../agenda";
+import { Client, ClientUser, CommandInteraction, MessageEmbed } from "discord.js";
+import { get_agenda, transfo_date, date_cours, verifier_date } from "../agenda";
 import moment from "moment";
 
 module.exports = {
@@ -71,6 +71,18 @@ module.exports = {
 
     //Recupère l'agenda
     const cal= await get_agenda(url);
+
+
+    let verif_date = verifier_date(DATE);
+
+    if (verif_date === "false"){
+      const message = `Veuillez insérer une date valide : ${DATE} n'est pas une date valide. Format : AAAA-MM-JJ`
+      console.log(`date invalide entrée ${DATE}`)
+
+      return interaction.editReply({
+        content: message,
+      });
+    }
 
     //Modifie la date 
     DATE = transfo_date(DATE);

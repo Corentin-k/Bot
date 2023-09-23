@@ -95,6 +95,17 @@ interface CourseInfo {
   end: string;
 }
 
+export function verifier_date(date: string): string {
+  const regex = /^\d{4}-\d{2}-\d{2}$/; // expression reguliere pour le format AAAA-MM-JJ
+
+  if (regex.test(date)) {
+      return "true"; // La date est au format correct
+  } else {
+      return "false"; // La date n'est pas au format correct
+  }
+}
+
+
 export function transfo_date(date: string): string {
     let transformedDate: string = date;
 
