@@ -2,8 +2,13 @@ import { Client, Collection, CommandInteraction } from "discord.js";
 import axios from 'axios';
 
 async function getBookInfo(Titre: string): Promise<string> {
+  
     try {
-      const response = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(Titre)}`);  //&key=${process.env.API_GOOGLE} https://developers.google.com/books/docs/v1/using?hl=fr
+      if(!process.env.APi_GOOGLE){
+        return "Clef de l'API manquante";
+      }
+
+      const response = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(Titre)}&key=${process.env.API_GOOGLE}`);  //&key=${process.env.API_GOOGLE} https://developers.google.com/books/docs/v1/using?hl=fr
       
       //appercu du réponse :https://www.googleapis.com/books/v1/volumes?q=Fondation
       const book = response.data.items[0]; // Prenez le premier résultat (vous pouvez gérer les résultats multiples)
@@ -15,7 +20,7 @@ async function getBookInfo(Titre: string): Promise<string> {
     
       return `**Titre**: ${title}\n**Auteur**: ${author}\n**Description**: ${description}\n**year**: ${year}`;
     } catch (error) {
-      return 'Aucune information trouvée pour ce livre.';
+      return 'Aucune information trouvée pour ce livre. ou Clef API incorrect';
     }
   }
 
@@ -39,11 +44,11 @@ module.exports = {
     ],
   runSlash: async (client: Client, interaction: CommandInteraction) => {
     await  interaction.deferReply({ ephemeral: true });
-    let message="En cours de programmation !!"
+    
     let livre= interaction.options.getString("title") as string;
     const bookInfo = await getBookInfo(livre);
     console.log(bookInfo);
-    await interaction.editReply({ content: message});
+    await interaction.editReply({ content: bookInfo});
     }
 }
 
