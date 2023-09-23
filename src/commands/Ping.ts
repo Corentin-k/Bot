@@ -5,7 +5,7 @@ module.exports = {
     description: "Answer by Pong !", 
     runSlash: (client: Client, interaction: any) => {
         interaction.reply({
-            content: "Pong !", 
+            content: `Pong! Latence de ${Date.now() - interaction.createdTimestamp}ms`,
             ephemeral: true 
         });
     }
