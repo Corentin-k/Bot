@@ -104,6 +104,12 @@ export function transfo_date(date: string): string {
       const date_a = date_str.split("T");
       transformedDate = date_a[0];
     }
+    else if (date === "demain" || date === "tomorrow") {
+      const date_demain = moment.utc().add(1, 'days');
+      const date_str = date_demain.format();
+      const date_b = date_str.split("T");
+      transformedDate = date_b[0];
+    }
   
     if (date.length === 2) {
       const date_jour = moment.utc();
