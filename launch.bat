@@ -1,1 +1,1 @@
-npx nodemon index.ts
+@REM npx nodemon index.ts
