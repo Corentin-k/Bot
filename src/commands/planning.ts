@@ -14,7 +14,7 @@ module.exports = {
     },
     {
       name: "date",
-      description: "Date",
+      description: "Date sous la forme XXXX-XX-XX",
       required: false,
       type: "STRING",
     },
