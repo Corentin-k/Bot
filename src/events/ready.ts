@@ -10,7 +10,7 @@ module.exports = {
         devGuild?.commands.set(client.commands.map((cmd: any) => cmd))
 
         client.user.setActivity({
-            name: 'travailler'
+            name: process.env.UTILISATEUR
         })
     }
 }
