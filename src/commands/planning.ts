@@ -120,7 +120,7 @@ module.exports = {
       "https://www.efrei.fr/wp-content/uploads/2022/01/LOGO_EFREI-PRINT_EFREI-WEB.png"
     );
     console.log(liste_cours.length);
-    affichage.setFooter({ text: `Vous avez un total de ${liste_cours.length} cours aujourd'hui` });
+    affichage.setFooter({ text: `Vous avez un total de ${liste_cours.length} cours le ${DATE}` });
 
     await interaction.editReply({ embeds: [affichage]});
     },
