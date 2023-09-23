@@ -1,6 +1,10 @@
 
 Bot discord permttant d'afficher le planning d'une personne 
 
+Par Corenint et Kevin.
+
+Inspiré du Bot de l'assossiation Crobotic et avec l'aide de Esteban
+  https://github.com/Crobot-ic/WebSite/tree/main/Server
 
 Pour lancer le bot : 
 
