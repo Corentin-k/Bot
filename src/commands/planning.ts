@@ -14,7 +14,7 @@ module.exports = {
     },
     {
       name: "date",
-      description: "Date sous la forme XXXX-XX-XX",
+      description: "Date sous la forme AAAA-MM-JJ",
       required: false,
       type: "STRING",
     },
@@ -73,6 +73,13 @@ module.exports = {
     const cal= await get_agenda(url);
 
 
+   /* }*/
+
+    //Modifie la date 
+    DATE = transfo_date(DATE);
+    //2023-04-21 
+    
+    // Regarde si la date donnée existe
     let verif_date = verifier_date(DATE);
 
     if (verif_date === "false"){
@@ -81,15 +88,9 @@ module.exports = {
 
       return interaction.editReply({
         content: message,
-      });
-    }
+      });}
 
-    //Modifie la date 
-    DATE = transfo_date(DATE);
-    //2023-04-21 
-    console.log(DATE);
-    // Regarde si la date donnée existe
-  
+   console.log(DATE);
     const liste_cours = date_cours(cal, DATE);
     
     
