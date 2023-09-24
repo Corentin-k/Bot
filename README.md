@@ -50,7 +50,14 @@ Inspiré du [Bot de l'assossiation Crobotic](https://github.com/Crobot-ic/WebSit
   * Récupérer la clef de l'API Google https://developers.google.com/books?hl=fr pour la commande [/livre](/src/commands/livre.ts)
   * Récupérer la clef de l'API OMDb https://www.omdbapi.com/ pour la comande [/film](/src/commands/film.ts)
 ### 3. <u>Pour lancer le bot</u> 
+
+Tapper la commande 
+
     npx nodemon
+
+et attendez d'avoir le message "Bot launched !"
+
+![Alt text](/src/images/message.png)
 
 > :warning: Si ca ne fonctionne pas :  npm install -g npm
 

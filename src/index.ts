@@ -1,5 +1,5 @@
 import * as dotenv from "dotenv"; // pour le .env
-dotenv.config();
+dotenv.config(); 
 
 
 import { Client, Collection } from "discord.js";
