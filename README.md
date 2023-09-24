@@ -14,10 +14,15 @@ Inspiré du [Bot de l'assossiation Crobotic](https://github.com/Crobot-ic/WebSit
 - [ ]  Création d'une commande qui récupère les données et les sauvegarde dans une base de donnée
 
 ###    1. <u> Installation</u>
-  Depuis le terminal :
+
+  Créer un dépot git dans un répertoire ou télécharger le fichier [zip](https://github.com/Corentin-k/Bot/archive/refs/heads/main.zip)
+
+        git init
+        git clone https://github.com/Corentin-k/Bot.git
+
+  Depuis le terminal (utiliser VS Code):
 
         npm install
-
         npm install discord.js axios node-ical moment moment-timezone
 
   Installer node.js en suivant les étapes sur https://nodejs.org/fr
