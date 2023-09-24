@@ -29,7 +29,7 @@ Inspiré du [Bot de l'assossiation Crobotic](https://github.com/Crobot-ic/WebSit
  
 
 ### 3. <u>Pour lancer le bot</u> 
-    - npx nodemon
+    npx nodemon
 
 > :warning: Si ca ne fonctionne pas :  npm install -g npm
 
@@ -40,3 +40,9 @@ Inspiré du [Bot de l'assossiation Crobotic](https://github.com/Crobot-ic/WebSit
     ![Alt text](/src/images/image.png)
     ![Alt text](/src/images/image2.png)
 
+* [Commande Livre](/src/commands/livre.ts)
+
+    ![Alt text](/src/images/image-livre.png)
+* [Commande Film](/src/commands/film.ts)
+
+    ![Alt text](/src/images/image-film.png)
