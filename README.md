@@ -6,7 +6,7 @@
 Inspiré du Bot de l'assossiation Crobotic et avec l'aide de @Serquand
   https://github.com/Crobot-ic/WebSite/tree/main/Server
 
-
+@kevin-71
 
 - [x] Création d'une commande planning
 - [X] Création d'une commande donnant des informations sur un livre en
@@ -14,22 +14,22 @@ Inspiré du Bot de l'assossiation Crobotic et avec l'aide de @Serquand
 - [X] Création d'une commande donnant des informations sur un film en      utilisant l'API omdbapi
 - [ ]  Création d'une commade qui récupére les données et les sauvegarde dans un base de donnée
 
-###    1.  Installation
-
-    Depuis le terminal :
+###    1. <u> Installation</u>
+  Depuis le terminal :
 
         npm install
 
         npm install discord.js axios node-ical moment moment-timezone
 
-    Installer node.js en suivant les étapes sur https://nodejs.org/fr
-    ou avec chocolatey `choco install nodejs`
-    
-### 2. Création du fichier .env 
-    Créez un fichier .env et suivez les informations du fichier [.env.example](https://github.com/Corentin-k/Bot/blob/main/.env.example) pour le remplir
-    -->  
-    d
-### 3. Pour lancer le bot 
+  Installer node.js en suivant les étapes sur https://nodejs.org/fr
+  ou avec chocolatey `choco install nodejs`
+
+
+### 2. <u>Création du fichier .env</u> 
+  Créez un fichier .env et suivez les informations du fichier "[.env.example](https://github.com/Corentin-k/Bot/blob/main/.env.example)" pour le remplir
+ 
+
+### 3. <u>Pour lancer le bot</u> 
     - npx nodemon
 
 > :warning: Si ca ne fonctionne pas :  npm install -g npm
