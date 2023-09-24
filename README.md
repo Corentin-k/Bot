@@ -11,7 +11,7 @@ Inspiré du [Bot de l'assossiation Crobotic](https://github.com/Crobot-ic/WebSit
 - [X] Création d'une commande donnant des informations sur un livre en
       utilisant l'API de Google
 - [X] Création d'une commande donnant des informations sur un film en      utilisant l'API omdbapi
-- [ ]  Création d'une commade qui récupére les données et les sauvegarde dans un base de donnée
+- [ ]  Création d'une commande qui récupère les données et les sauvegarde dans une base de donnée
 
 ###    1. <u> Installation</u>
   Depuis le terminal :
