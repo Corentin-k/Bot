@@ -3,10 +3,9 @@
 ----
 
 
-Inspiré du Bot de l'assossiation Crobotic et avec l'aide de @Serquand
-  https://github.com/Crobot-ic/WebSite/tree/main/Server
-
-@kevin-71
+Inspiré du [Bot de l'assossiation Crobotic](https://github.com/Crobot-ic/WebSite/tree/main/Server
+) et avec l'aide de [@Serquand](https://github.com/Serquand)
+  
 
 - [x] Création d'une commande planning
 - [X] Création d'une commande donnant des informations sur un livre en
