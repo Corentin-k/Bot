@@ -1,7 +1,7 @@
 # DISCORD BOT
 #### By [@Corentin-k](https://github.com/Corentin-k) and [@kevin-71](https://github.com/kevin-71).
 ----
-:uk: [Version Française](/README-fr.md)
+:fr: [Version Française](/README-fr.md)
 
 Inspired by [the Crobotic Association's bot ](https://github.com/Crobot-ic/WebSite/tree/main/Server
 ) whith the assistance of [@Serquand](https://github.com/Serquand)
