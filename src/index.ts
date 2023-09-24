@@ -31,3 +31,17 @@ const main = async () => {
     
 }
 main();
+
+/*
+async :
+
+Lorsqu'une fonction est déclarée avec le mot-clé async, cela signifie qu'elle retournera toujours une promesse. 
+Une promesse est un objet qui représente la réussite ou l'échec d'une opération asynchrone.
+
+Une fonction async peut contenir des opérations asynchrones (telles que des appels de réseau, des lectures de fichiers, des requêtes de base de données, etc.) 
+et vous permet d'utiliser le mot-clé await à l'intérieur de la fonction pour attendre la résolution de ces opérations asynchrones.
+
+await :
+
+Le mot-clé await est utilisé à l'intérieur d'une fonction async pour suspendre l'exécution de la fonction jusqu'à ce que la promesse soit résolue (ou rejetée).
+*/
