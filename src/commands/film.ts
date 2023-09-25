@@ -1,4 +1,4 @@
-import { Client, Collection, CommandInteraction } from "discord.js";
+import { Client, ClientUser, CommandInteraction } from "discord.js";
 import axios from 'axios';
 ///https://www.omdbapi.com/
 
@@ -7,6 +7,8 @@ interface infoFilm {
   year: string;
   director: string;
   plot: string;
+
+ 
   
 }
 
@@ -26,7 +28,7 @@ async function getMovieInfo(query: string): Promise<infoFilm | string> {
         year: movie.Year,
         director: movie.Director || 'Réalisateur inconnu',
         plot: movie.Plot || 'Pas de description disponible',
-
+       
       };
     
 
@@ -66,7 +68,9 @@ module.exports = {
     const filmInfo = await getMovieInfo(film);
     console.log(filmInfo);
 
+    console.log(interaction.user.username);
 
+    console.log(interaction.user.avatarURL());
     if (typeof filmInfo === 'string') {
       await interaction.editReply({ content: filmInfo });
     } else {
