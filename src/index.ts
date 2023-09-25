@@ -9,6 +9,8 @@ import EventsHandlers from "./Utils/Handlers/EventsHandlers";
 import CommandsHandlers from "./Utils/Handlers/CommandsHandlers";
 
 
+
+
 // Controle des librairies.
 const libraries = ["discord.js", "axios", "node-ical", "moment", "moment-timezone"];
 async function checkLibraries() {
@@ -20,10 +22,12 @@ async function checkLibraries() {
       } catch (error) {
         console.log(chalk.red(`Bibliothèque manquante : ${library}`));
         console.log(chalk.red(`types following command >> npm install ${library}`));
-        
-     }
-    }
-  }
+        if (error){
+            process.exit(0); 
+        }
+    
+    }}}
+  
 console.clear();
 console.clear();
   checkLibraries();
