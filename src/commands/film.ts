@@ -1,9 +1,17 @@
 import { Client, Collection, CommandInteraction } from "discord.js";
 import axios from 'axios';
-////https://www.omdbapi.com/
+///https://www.omdbapi.com/
+
+interface infoFilm {
+  title: string;
+  year: string;
+  director: string;
+  plot: string;
+  
+}
 
 // Fonction pour récupérer les informations d'un film en utilisant l'API OMDb
-async function getMovieInfo(query: string): Promise<string> {
+async function getMovieInfo(query: string): Promise<infoFilm | string> {
    
     try {
       if(!process.env.API_FILM){
@@ -12,12 +20,20 @@ async function getMovieInfo(query: string): Promise<string> {
       }
       const response = await axios.get(`http://www.omdbapi.com/?t=${encodeURIComponent(query)}&apikey=${process.env.API_FILM}`);
       const movie = response.data;
-      const title = movie.Title;
-      const year = movie.Year;
-      const director = movie.Director;
-      const plot = movie.Plot;
-      
-      return `**Titre**: ${title}\n**Année**: ${year}\n**Réalisateur**: ${director}\n**Synopsis**: ${plot}`;
+      const infoFilm: infoFilm = {
+
+        title:movie.Title,
+        year: movie.Year,
+        director: movie.Director || 'Réalisateur inconnu',
+        plot: movie.Plot || 'Pas de description disponible',
+
+      };
+    
+
+
+
+
+      return infoFilm;
     } catch (error) {
       
       return 'Aucune information trouvée pour ce film. ou Clef API incorrect';
@@ -47,9 +63,17 @@ module.exports = {
     await  interaction.deferReply({ ephemeral: true });
     
     let film= interaction.options.getString("title") as string;
-    const bookInfo = await getMovieInfo(film);
-    console.log(bookInfo);
-    await interaction.editReply({ content: bookInfo});
+    const filmInfo = await getMovieInfo(film);
+    console.log(filmInfo);
+
+
+    if (typeof filmInfo === 'string') {
+      await interaction.editReply({ content: filmInfo });
+    } else {
+      const info = `**Titre**: ${filmInfo.title}\n**Réalisateur**: ${filmInfo.director}\n**Synopsis**: ${filmInfo.plot}\n**Année**: ${filmInfo.year}`;
+      await interaction.editReply({ content: info });
+    }
+
     }
 }
 

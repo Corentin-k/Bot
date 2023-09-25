@@ -1,7 +1,12 @@
 import { Client, Collection, CommandInteraction } from "discord.js";
 import axios from 'axios';
-
-async function getBookInfo(Titre: string): Promise<string> {
+interface infoLivre {
+  title: string;
+  year: string;
+  author: string;
+  description: string;
+}
+async function getBookInfo(Titre: string): Promise<infoLivre | string> {
   
     try {
       if(!process.env.APi_GOOGLE){
@@ -12,13 +17,20 @@ async function getBookInfo(Titre: string): Promise<string> {
       
       //appercu du réponse :https://www.googleapis.com/books/v1/volumes?q=Fondation
       const book = response.data.items[0]; // Prenez le premier résultat (vous pouvez gérer les résultats multiples)
-      const title = book.volumeInfo.title;
-      const year = book.volumeInfo.publishedDate;
-      const author = book.volumeInfo.authors?.join(', ') || 'Auteur inconnu';
-      const description = book.volumeInfo.description || 'Pas de description disponible';
+
+      const infoLivre: infoLivre = {
+
+        title:book.volumeInfo.title,
+        year: book.volumeInfo.publishedDate,
+        author: book.volumeInfo.authors?.join(', ') || 'Auteur inconnu',
+        description: book.volumeInfo.description || 'Pas de description disponible',
+
+      };
     
-    
-      return `**Titre**: ${title}\n**Auteur**: ${author}\n**Description**: ${description}\n**year**: ${year}`;
+      return infoLivre;
+      
+      
+   
     } catch (error) {
       return 'Aucune information trouvée pour ce livre. ou Clef API incorrect';
     }
@@ -45,10 +57,20 @@ module.exports = {
   runSlash: async (client: Client, interaction: CommandInteraction) => {
     await  interaction.deferReply({ ephemeral: true });
     
-    let livre= interaction.options.getString("title") as string;
-    const bookInfo = await getBookInfo(livre);
-    console.log(bookInfo);
-    await interaction.editReply({ content: bookInfo});
+    const livre = interaction.options.getString("title") as string;
+    const infoLivre = await getBookInfo(livre);
+
+    if (typeof infoLivre === 'string') {
+      await interaction.editReply({ content: infoLivre });
+    } else {
+      const info = `**Titre**: ${infoLivre.title}\n**Auteur**: ${infoLivre.author}\n**Description**: ${infoLivre.description}\n**Année de publication**: ${infoLivre.year}`;
+      await interaction.editReply({ content: info });
+    }
+  
+
+    
+    console.log(infoLivre);
+    
     }
 }
 
