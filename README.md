@@ -11,7 +11,7 @@ Inspired by [the Crobotic Association's bot ](https://github.com/Crobot-ic/WebSi
 - [X] Create a command that provides informations about a book. This command uses the Google API.
 - [X] Create a command that provides informations about a movie This command uses the OMBd API.
 - [ ]  Created a command that retrieves data of the book/movie command and saves it in a database.
-
+- [ ] Ajout d'un contrôle des bibliothèques
 ----
 ###    1. <u> Installation</u>
 
