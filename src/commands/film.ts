@@ -68,8 +68,8 @@ module.exports = {
     const filmInfo = await getMovieInfo(film);
     console.log(filmInfo);
 
-    console.log(interaction.user.username);
-
+    console.log(interaction.user.id);
+    
     console.log(interaction.user.avatarURL());
     if (typeof filmInfo === 'string') {
       await interaction.editReply({ content: filmInfo });
