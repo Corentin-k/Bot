@@ -1,4 +1,5 @@
 import * as dotenv from "dotenv"; // pour le .env
+import chalk from "chalk";
 dotenv.config(); 
 
 
@@ -6,6 +7,29 @@ import { Client, Collection } from "discord.js";
 
 import EventsHandlers from "./Utils/Handlers/EventsHandlers";
 import CommandsHandlers from "./Utils/Handlers/CommandsHandlers";
+
+
+// Controle des librairies.
+const libraries = ["discord.js", "axios", "node-ical", "moment", "moment-timezone"];
+async function checkLibraries() {
+    for (const library of libraries) {
+      try {
+        require.resolve(library);
+        console.log(chalk.grey(`${library} est installée.`));
+
+      } catch (error) {
+        console.log(chalk.red(`Bibliothèque manquante : ${library}`));
+        console.log(chalk.red(`types following command >> npm install ${library}`));
+        
+     }
+    }
+  }
+console.clear();
+console.clear();
+  checkLibraries();
+
+
+
 
 // Partie DiscordJS
 const client = new Client({ intents: 3243773  }) as any; //131071 3243773 3276799
@@ -20,8 +44,7 @@ process.on(`warning`,(...args) => {console.log(...args)})
 client.login(process.env.BOT_TOKEN); // connexion au bot
 //process.env.BOT_TOKEN
 const mainDiscordJs = async () => {
-    console.clear();
-    console.clear();
+    
     await EventsHandlers(client); // initialisation sur gestionnaire d'évènement
     await CommandsHandlers(client); // initialisation sur gestionnaire de commandes
 }

@@ -38,11 +38,11 @@ Inspired by [the Crobotic Association's bot ](https://github.com/Crobot-ic/WebSi
   
   * To get the ID of the discord server : 
 
-        Server Settings> widget>SERVER ID
+      Server Settings> widget>SERVER ID
     
   * To retrieves the ID of the discord channel :
 
-        Right-click on the channel > Copy Channel ID
+      Right-click on the channel > Copy Channel ID
       
 
 > :bulb: An API key is required to access the /livre and /film commands.
