@@ -23,6 +23,6 @@ const UsersFilms = Connection.define("UsersFilms", {
 }, { timestamps: false });
 
 
-UsersFilms.belongsTo(Films, { foreignKey: 'idFilm' });
+
 export default UsersFilms;
 

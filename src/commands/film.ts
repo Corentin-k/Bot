@@ -36,9 +36,9 @@ async function getMovieInfo(query: string): Promise<infoFilm | string> {
        
       };
     
-
-
-
+      if (infoFilm.title==undefined){
+        return 'Aucune information trouvée pour ce film.';
+      }
 
       return infoFilm;
     } catch (error) {
@@ -73,9 +73,7 @@ module.exports = {
     const filmInfo = await getMovieInfo(film);
     console.log(filmInfo);
 
-    console.log(interaction.user.id);
-    
-    console.log(interaction.user.avatarURL());
+  
     if (typeof filmInfo === 'string') {
       await interaction.editReply({ content: filmInfo });
 
@@ -90,8 +88,8 @@ module.exports = {
       }
       
       await Users.findOrCreate({
-        where: { idUser: interaction.user.id },
-        defaults: { UserName: interaction.user.username },
+        where: { idUser: interaction.user.id,UserName: interaction.user.username},
+  
       });
 
       const idFilm=uuidv4();
@@ -100,7 +98,7 @@ module.exports = {
         idFilm: idFilm,
         titre: filmInfo.title, 
         realisateur: filmInfo.director , 
-        dateSortie: filmInfo.year 
+        dateSortie: filmInfo.year ,
     
       });
 
