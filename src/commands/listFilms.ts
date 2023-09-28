@@ -4,26 +4,40 @@ import { QueryTypes } from 'sequelize';
 import Films from "../Models/DBfilms";
 import Users from "../Models/User";
 import UsersFilms from "../Models/UserFilm";
-
+interface FilmAttributes {
+    idFilm: string;
+    titre: string;
+    realisateur: string;
+    dateSortie: string;
+  }
+  
 
 async function fetchMoviesForUser(userId: string): Promise<string>  {
     try {
-      const moviesForUser = await sequelize.query(`
+      const listFilm = (await sequelize.query(`
             select * from films f,users u where u.iduser= :userId
       `, {
         replacements: { userId },
         type: QueryTypes.SELECT,
-      });
-      const list = `Liste de films pour l'utilisateur avec l'ID ${userId} : ${JSON.stringify(moviesForUser)}`;
-      console.log(list);
-      return list;
+      })) as any[];
+
+      let formattedList = `Liste de films de ${listFilm[0].UserName} :\n`;
+     
+      for (const film of listFilm) {
+        console.log(film);
+         formattedList += `1. Titre : ${film.titre}\n`;
+        formattedList += `   Réalisateur : ${film.realisateur}\n`;
+        formattedList += `   Date de sortie : ${film.dateSortie}\n\n`;
+      }
+
+      console.log(formattedList);
+      return formattedList;
     } catch (error) {
-        const err = `Erreur lors de l\'exécution de la requête SQL :, ${error}`;
+      const err = `Erreur lors de l'exécution de la requête SQL : ${error}`;
       console.error(err);
       return err;
     }
-  }
-  
+}
   
 module.exports = {
     name: "listfilms", 
