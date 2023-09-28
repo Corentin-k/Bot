@@ -1,5 +1,10 @@
 import { Client, ClientUser, CommandInteraction } from "discord.js";
 import axios from 'axios';
+import { v4 as uuidv4} from 'uuid';
+import Films from "../Models/DBfilms";
+import Users from "../Models/User";
+import UserFilm from "../Models/UserFilm";
+import { UUIDV4 } from "sequelize";
 ///https://www.omdbapi.com/
 
 interface infoFilm {
@@ -73,11 +78,41 @@ module.exports = {
     console.log(interaction.user.avatarURL());
     if (typeof filmInfo === 'string') {
       await interaction.editReply({ content: filmInfo });
+
+
     } else {
       const info = `**Titre**: ${filmInfo.title}\n**Réalisateur**: ${filmInfo.director}\n**Synopsis**: ${filmInfo.plot}\n**Année**: ${filmInfo.year}`;
       await interaction.editReply({ content: info });
+       // Ajouter le film en BDD
+      interface UserAttributes {
+        idUser: string;
+        UserName: string;
+      }
+      
+      await Users.findOrCreate({
+        where: { idUser: interaction.user.id },
+        defaults: { UserName: interaction.user.username },
+      });
+
+      const idFilm=uuidv4();
+      const iduser=interaction.user.id
+      await Films.create({
+        idFilm: idFilm,
+        titre: filmInfo.title, 
+        realisateur: filmInfo.director , 
+        dateSortie: filmInfo.year 
+    
+      });
+
+      await UserFilm.create({
+        idFilm: idFilm, 
+        idUser: iduser, 
+       
+      });
     }
 
+     
+    
     }
 }
 

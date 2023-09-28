@@ -23,7 +23,8 @@ Inspired by [the Crobotic Association's bot ](https://github.com/Crobot-ic/WebSi
   From a terminal (use the VS Code terminal):
 
         npm install
-        npm install discord.js axios node-ical moment moment-timezone
+        npm install discord.js axios node-ical moment moment-timezone uuid
+        npm i -D @types/uuid
 
   Install node.js by follow the steps at https://nodejs.org/fr
   or with chocolatey using `choco install nodejs`

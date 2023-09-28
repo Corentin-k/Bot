@@ -9,6 +9,7 @@ import EventsHandlers from "./Utils/Handlers/EventsHandlers";
 import CommandsHandlers from "./Utils/Handlers/CommandsHandlers";
 
 
+import setup from "./Models/Setup";
 
 
 // Controle des librairies.
@@ -30,10 +31,10 @@ async function checkLibraries() {
   
 console.clear();
 console.clear();
-  checkLibraries();
-
-
-
+checkLibraries();
+//Partie Base de
+ 
+setup();
 
 // Partie DiscordJS
 const client = new Client({ intents: 3243773  }) as any; //131071 3243773 3276799
@@ -54,6 +55,9 @@ const mainDiscordJs = async () => {
 }
 
 const main = async () => {
+
+ 
+
     await mainDiscordJs(); // initialisation de discordJS
     
 }
