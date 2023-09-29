@@ -79,13 +79,11 @@ module.exports = {
 
 
     } else {
+     
       const info = `**Titre**: ${filmInfo.title}\n**Réalisateur**: ${filmInfo.director}\n**Synopsis**: ${filmInfo.plot}\n**Année**: ${filmInfo.year}`;
       await interaction.editReply({ content: info });
        // Ajouter le film en BDD
-      interface UserAttributes {
-        idUser: string;
-        UserName: string;
-      }
+     
       
       await Users.findOrCreate({
         where: { idUser: interaction.user.id,UserName: interaction.user.username},
@@ -107,8 +105,10 @@ module.exports = {
         idUser: iduser, 
        
       });
+      await interaction.followUp({ content: `Le film "${filmInfo.title}" a été ajouté à votre liste.`,ephemeral:true });
     }
 
+  
      
     
     }

@@ -1,6 +1,6 @@
 import { Client, ClientUser, CommandInteraction } from "discord.js";
 import sequelize from "../Models/Connection";
-import { QueryTypes } from 'sequelize';
+import { INTEGER, QueryTypes } from 'sequelize';
 import Films from "../Models/DBfilms";
 import Users from "../Models/User";
 import UsersFilms from "../Models/UserFilm";
@@ -15,19 +15,23 @@ interface FilmAttributes {
 async function fetchMoviesForUser(userId: string): Promise<string>  {
     try {
       const listFilm = (await sequelize.query(`
-            select * from films f,users u where u.iduser= :userId
-      `, {
+      SELECT Films.*
+      FROM Films
+      INNER JOIN UsersFilms ON Films.idFilm = UsersFilms.idFilm 
+      WHERE UsersFilms.idUser = :userId ;
+      `, { //Jointurre interne entre Films et UsersFilms
         replacements: { userId },
         type: QueryTypes.SELECT,
       })) as any[];
 
       let formattedList = `Liste de films de ${listFilm[0].UserName} :\n`;
-     
+      let i=0;
       for (const film of listFilm) {
         console.log(film);
-         formattedList += `1. Titre : ${film.titre}\n`;
+         formattedList += `${i}. Titre : ${film.titre}\n`;
         formattedList += `   Réalisateur : ${film.realisateur}\n`;
         formattedList += `   Date de sortie : ${film.dateSortie}\n\n`;
+        i=i+1;
       }
 
       console.log(formattedList);
