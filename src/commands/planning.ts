@@ -36,7 +36,7 @@ module.exports = {
       }
     console.log(NOM);
 
-    // Check presence of information
+   
     if (NOM!== "corentin") {
       if (NOM !== "maxime" ) {
         if (NOM !== "kevin") {
