@@ -16,7 +16,7 @@ async function getBookInfo(Titre: string): Promise<infoLivre | string> {
       const response = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(Titre)}&key=${process.env.API_GOOGLE}`);  //&key=${process.env.API_GOOGLE} https://developers.google.com/books/docs/v1/using?hl=fr
       
       //appercu du réponse :https://www.googleapis.com/books/v1/volumes?q=Fondation
-      const book = response.data.items[0]; // Prenez le premier résultat (vous pouvez gérer les résultats multiples)
+      const book = response.data.items[0]; // Prend le premier résultat 
 
       const infoLivre: infoLivre = {
 
