@@ -8,7 +8,6 @@ import ical, { CalendarResponse  } from "node-ical";
 // Fonction qui récupère l'agenda sur internet
 export async function get_agenda(url: string): Promise<CalendarResponse> {
 
-  
     const response = await axios.get(url);
     const cal = ical.parseICS(response.data);
    
@@ -107,40 +106,56 @@ export function verifier_date(date: string): string {
 
 
 export function transfo_date(date: string): string {
-    let transformedDate: string = date;
+    let transformedDate: string;
+    let date_annee: string;
+    let mois: number;
+    transformedDate=date;
+    if (typeof date !== 'string') {
+      return transformedDate='La date doit être une chaîne de caractères';
+    }
 
+    
     if (date === "today" || date === "") {
       const date_jour = moment.utc();
-      const date_str = date_jour.format();
-      const date_a = date_str.split("T");
-      transformedDate = date_a[0];
+      transformedDate = date_jour.format("YYYY-MM-DD");
+
     }
     else if (date === "demain" || date === "tomorrow") {
       const date_demain = moment.utc().add(1, 'days');
-      const date_str = date_demain.format();
-      const date_b = date_str.split("T");
-      transformedDate = date_b[0];
+      transformedDate = date_demain.format("YYYY-MM-DD");
     }
   
-    if (date.length === 2) {
+    else if (date.length === 2) {
       const date_jour = moment.utc();
-      const date_str = date_jour.format();
-      const date_split = date_str.split("T");
-      const date_annee = date_split[0];
-      const date_a = date_annee.split("-");
-      if (date_a[2] > date) {
-        const mois_modifier = parseInt(date_a[1]) + 1;
-        if (mois_modifier < 10 && mois_modifier >= 1) {
-          date_a[1] = `0${mois_modifier}`;
-        } else {
-          date_a[1] = `${parseInt(date_a[1]) + 1}`;
-        }
-        console.log(date_a, "modifier");
+      date_annee = date_jour.format("YYYY-MM-DD").split("-")[0];
+      mois = parseInt(date_jour.format("MM"));
+      const jour = parseInt(date);
+      
+      if (jour < 1 || jour > 31) {
+        return transformedDate="Jour invalide";
       }
-      date_a[2] = date;
-      console.log(date_a);
-      transformedDate = `${date_a[0]}-${date_a[1]}-${date_a[2]}`;
-      console.log(transformedDate);
+      if (mois === 2 && jour > 29) {
+        return transformedDate="Février ne peut pas avoir plus de 29 jours"
+      }
+      if ((mois === 4 || mois === 6 || mois === 9 || mois === 11) && jour > 30) {
+        return transformedDate="Ce mois ne peut pas avoir plus de 30 jours";
+      }
+      if (mois === 1 || mois === 3 || mois === 5 || mois === 7 || mois === 8 || mois === 10 || mois === 12) {
+        if (jour > 31) {
+          return transformedDate="Ce mois ne peut pas avoir plus de 31 jours";
+        }
+      }
+      if (jour < date_jour.date()) {
+        let mois_suivant = mois === 12 ? 1 : mois + 1;
+        transformedDate = `${date_annee}-${mois_suivant.toString().padStart(2, '0')}-${date}`;
+      } else {
+          let annee_suivante = parseInt(date_annee) + 1;
+          transformedDate = `${annee_suivante}-${mois.toString().padStart(2, '0')}-${date}`;
+      }
     }
+
+    
+
+
     return transformedDate;
   }

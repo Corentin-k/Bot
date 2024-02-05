@@ -69,17 +69,18 @@ module.exports = {
         });
       }
 
-    //Recupère l'agenda
-    const cal= await get_agenda(url);
+    
 
     //Modifie la date 
     DATE = transfo_date(DATE); // si la date est de type vide, today, tomorrow ou JJ et la transforme en AAAA-MM-JJ
+    
     
     // Sinon on vérifie que la date donnée est bien dans le format AAAA-MM-JJ.
     let verif_date = verifier_date(DATE);
 
     if (verif_date === "false"){
-      const message = `Veuillez insérer une date valide : ${DATE} n'est pas une date valide. Format : AAAA-MM-JJ`
+      const message = `${DATE} Veuillez insérer une date valide. Format : AAAA-MM-JJ`
+      
       console.log(`date invalide entrée ${DATE}`)
 
       return interaction.editReply({
@@ -87,6 +88,11 @@ module.exports = {
       });}
 
    console.log(DATE);
+
+   
+    //Recupère l'agenda
+    const cal= await get_agenda(url);
+
     const liste_cours = date_cours(cal, DATE);
     
     
@@ -134,3 +140,4 @@ module.exports = {
     await interaction.editReply({ embeds: [affichage]});
     },
 }
+
