@@ -148,14 +148,15 @@ export function transfo_date(date: string): string {
       if (jour < date_jour.date()) {
         let mois_suivant = mois === 12 ? 1 : mois + 1;
         transformedDate = `${date_annee}-${mois_suivant.toString().padStart(2, '0')}-${date}`;
-      } else {
+      }  else if (  mois === 12){
           let annee_suivante = parseInt(date_annee) + 1;
-          transformedDate = `${annee_suivante}-${mois.toString().padStart(2, '0')}-${date}`;
+          return transformedDate = `${annee_suivante}-${mois.toString().padStart(2, '0')}-${date}`;
       }
+      transformedDate = `${date_annee}-${mois.toString().padStart(2, '0')}-${date}`;
+
     }
 
     
-
-
+   
     return transformedDate;
   }

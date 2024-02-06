@@ -2,6 +2,12 @@ import { Client, ClientUser, CommandInteraction, MessageEmbed } from "discord.js
 import { get_agenda, transfo_date, date_cours, verifier_date } from "../agenda";
 import moment from "moment";
 
+//Cache pour stocker les agendas des personnes pour éviter de faire des requêtes inutiles à chaque fois que la commande est utilisée 
+const agendasCache: { [key: string]: any } = {};
+
+
+
+
 module.exports = {
   name: "planning",
   description: "Commande pour obtenir le planning d'une personne",
@@ -21,6 +27,7 @@ module.exports = {
   ],
   runSlash: async (client: Client, interaction: CommandInteraction) => {
     await  interaction.deferReply({ ephemeral: true });
+    
       // Récupère les valeurs des options 'name' et 'date' depuis l'interaction
     let NOM = interaction.options.getString("name") as string;
     let DATE = interaction.options.getString("date") ?? "";
@@ -89,12 +96,24 @@ module.exports = {
 
    console.log(DATE);
 
-   
-    //Recupère l'agenda
-    const cal= await get_agenda(url);
-
-    const liste_cours = date_cours(cal, DATE);
-    
+   let cal;
+    // Vérifie si l'agenda est en cache
+    // hasOwnProperty permet de vérifier si la propriété existe dans l'objet
+    if (agendasCache[NOM] && agendasCache[NOM].hasOwnProperty(DATE)) {
+        cal = agendasCache[NOM][DATE];
+        
+      } else {
+        // Sinon on récupère l'agenda
+        cal = await get_agenda(url);
+        
+        // Et on stocke l'agenda dans le cache
+        if (!agendasCache[NOM]) {
+          agendasCache[NOM] = {};
+        }
+        agendasCache[NOM][DATE] = cal;
+    }
+   const liste_cours = date_cours(cal, DATE);
+  
     
     // Mise en forme de l'affichage
    
