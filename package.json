@@ -18,7 +18,8 @@
     "nodemailer": "^6.9.3",
     "request": "^2.88.2",
     "sequelize": "^6.33.0",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "nodemon": "^2.0.15"
   },
   "devDependencies": {
     "@types/cors": "^2.8.13",
@@ -30,5 +31,8 @@
     "@types/uuid": "^9.0.4",
     "ts-node": "^10.9.1",
     "typescript": "^5.2.2"
+  },
+  "scripts": {
+    "start": "nodemon start"
   }
 }

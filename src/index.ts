@@ -40,10 +40,10 @@ setup();
 const client = new Client({ intents: 3243773  }) as any; //131071 3243773 3276799
 client.commands = new Collection(); //permmettra de stocker l'ensemble des commandes
 
-// process.on(`exit`,code => {console.log(`le processus s'est arreté avec le code ${code} !`)}) 
-// process.on(`uncaughtExeption`,(err,origin) => {console.log(`uncaughtExeption ${err}, origin : ${origin} !`)}) // gestion des erreurs
-// process.on(`unhandledRejection`,(reason,promise) => {console.log(`unhandledRejection ${reason}\n -----\n${promise} !`)})
-// process.on(`warning`,(...args) => {console.log(...args)})
+process.on(`exit`,code => {console.log(`le processus s'est arreté avec le code ${code} !`)}) 
+process.on(`uncaughtExeption`,(err,origin) => {console.log(`uncaughtExeption ${err}, origin : ${origin} !`)}) // gestion des erreurs
+process.on(`unhandledRejection`,(reason,promise) => {console.log(`unhandledRejection ${reason}\n -----\n${promise} !`)})
+process.on(`warning`,(...args) => {console.log(...args)})
 
 
 client.login(process.env.BOT_TOKEN); // connexion au bot
@@ -76,3 +76,4 @@ await :
 
 Le mot-clé await est utilisé à l'intérieur d'une fonction async pour suspendre l'exécution de la fonction jusqu'à ce que la promesse soit résolue (ou rejetée).
 */
+

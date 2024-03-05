@@ -5,9 +5,6 @@ import moment from "moment";
 //Cache pour stocker les agendas des personnes pour éviter de faire des requêtes inutiles à chaque fois que la commande est utilisée 
 const agendasCache: { [key: string]: any } = {};
 
-
-
-
 module.exports = {
   name: "planning",
   description: "Commande pour obtenir le planning d'une personne",
@@ -24,9 +21,22 @@ module.exports = {
       required: false,
       type: "STRING",
     },
+    {
+      name: "ephemeral",
+      description: "Est-ce que la réponse doit être éphémère ?",
+      required: false,
+      type: "STRING",
+    },
   ],
   runSlash: async (client: Client, interaction: CommandInteraction) => {
-    await  interaction.deferReply({ ephemeral: true });
+    let isephemeral = interaction.options.getString("ephemeral") as string;
+    let statuts;
+    if (isephemeral === "false") { 
+       statuts = false;
+    } else {
+       statuts = true;
+    }
+    await  interaction.deferReply({ ephemeral: statuts });
     
       // Récupère les valeurs des options 'name' et 'date' depuis l'interaction
     let NOM = interaction.options.getString("name") as string;
