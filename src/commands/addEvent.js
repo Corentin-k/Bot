@@ -32,7 +32,7 @@ export default {
       required: true,
     },
     {
-      name: "houre",
+      name: "hour",
       description: "Heure de l'événement - HH:MM",
       type: 3,
       required: true,
@@ -59,13 +59,13 @@ export default {
   ],
 
   runSlash: async (client, interaction) => {
-    await interaction.deferReply();
+    await interaction.deferReply(  {flags: 64});
 
     const userId = interaction.user.id;
     const title = interaction.options.getString("title");
     const description = interaction.options.getString("description");
     const dateInput = interaction.options.getString("date");
-    const timeInput = interaction.options.getString("houre");
+    const timeInput = interaction.options.getString("hour");
     const where = interaction.options.getString("where");
     const everyoneTF = interaction.options.getString("everyonetf") === "true";
     const numberCallback = interaction.options.getInteger("numbercallback");

@@ -35,7 +35,7 @@ export const scheduleReminder = async (
     console.error("Date invalide :", date);
     return;
   }
-
+  date.setHours(hour, minute, 0, 0);
   const reminders = [];
 
   // Rappel 2 heures avant l'événement (si numberCallback >= 1)
@@ -53,7 +53,7 @@ export const scheduleReminder = async (
     dayOfEvent.setHours(10, 0, 0);
     reminders.push({
       date: dayOfEvent,
-      message: "🌅 Bon matin ! Votre événement a lieu **aujourd'hui**.",
+      message: "🌅  Votre événement a lieu **aujourd'hui**.",
     });
   }
 
