@@ -1,23 +1,47 @@
+import { Events, MessageFlags } from 'discord.js';
 
 export default {
-    name: "interactionCreate", 
-    once: false, 
-    async execute(client, interaction) {
+    name: Events.InteractionCreate,
+    async execute(interaction) {
 
-        // Vérifie si l'interaction est une commande
-        if (interaction.isCommand()) {
+        if (!interaction.isChatInputCommand()) return;
 
-            // Récupère la commande associée à l'interaction en utilisant son nom
-            const cmd = client.commands.get(interaction.commandName);
+        const client = interaction.client;
 
-            // Si la commande n'existe pas, renvoie une réponse à l'interaction
-            if (!cmd) return interaction.reply("Cette commande n'existe pas");
+        const command = client.commands.get(interaction.commandName);
 
-            // Exécute la commande associée à l'interaction
-            cmd.runSlash(client, interaction);
+        if (!command) {
+
+            return interaction.reply({
+                content: "Cette commande n'existe pas ou n'est plus disponible.",
+                flags: MessageFlags.Ephemeral
+            });
         }
 
-        const devGuild = await client.guilds.cache.get(process.env.SERV_ID);
-        devGuild.commands.set(client.commands.map((cmd) => cmd));
+        try {
+            if (command.runSlash) {
+
+                await command.runSlash(client, interaction);
+            } else if (command.execute) {
+
+                await command.execute(interaction);
+            } else {
+                throw new Error("La commande ne contient ni 'runSlash' ni 'execute'.");
+            }
+
+        } catch (error) {
+            console.error(`Erreur commande ${interaction.commandName}:`, error);
+
+            const errorMsg = {
+                content: 'Une erreur est survenue lors de l\'exécution !',
+                flags: MessageFlags.Ephemeral
+            };
+
+            if (interaction.replied || interaction.deferred) {
+                await interaction.followUp(errorMsg);
+            } else {
+                await interaction.reply(errorMsg);
+            }
+        }
     }
 };

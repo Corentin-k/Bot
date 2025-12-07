@@ -42,11 +42,7 @@ export default {
     const isEphemeral = interaction.options.getString("ephemeral");
     let connection = await mysql.createConnection(dbConfig);
     let statuts;
-    if (isEphemeral === "false") {
-      statuts = false;
-    } else {
-      statuts = true;
-    }
+    statuts = isEphemeral !== "false";
     // Remplace l'usage de ephemeral par flags
     await interaction.deferReply({ flags: statuts ? 64 : 0 });
 
@@ -117,14 +113,14 @@ export default {
         .setTitle(`Cours de ${nom}`)
         .setDescription(`__Voici vos cours du ${date} :__\n`)
         .setColor(0x00bfff)
-        .setFooter({ text: `Total de ${coursDuJour.length} cours pour le ${date}` })
+        .setFooter([{ text: `Total de ${coursDuJour.length} cours pour le ${date}` },])
         .setThumbnail("https://www.efrei.fr/wp-content/uploads/2022/01/LOGO_EFREI-PRINT_EFREI-WEB.png");
 
       coursDuJour.forEach(({ nom_cours, salle, start, end }) => {
-        embed.addFields(
+        embed.addFields([
           { name: nom_cours, value: salle, inline: true },
           { name: "Horaires", value: `${moment(start, "HH:mm").format("HH:mm")} - ${ moment(end, "HH:mm").format("HH:mm")}`, inline: true },
-          { name: "\u200B", value: "\u200B", inline: false }
+          { name: "\u200B", value: "\u200B", inline: false },]
         );
       });
 

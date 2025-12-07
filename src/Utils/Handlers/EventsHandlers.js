@@ -1,47 +1,47 @@
-import { readdirSync } from "fs";
-import chalk from "chalk";
+import { fileURLToPath } from 'url';
+import path from 'path';
+import fs from 'fs';
+import chalk from 'chalk';
 
-const eventList = ['ready','interactionCreate',
-    'apiRequest', 'apiResponse', 'applicationCommandCreate', 'applicationCommandDelete', 'applicationCommandUpdate',
-    'channelCreate', 'channelDelete', 'channelPinsUpdate', 'channelUpdate', 'debug', 'emojiCreate', 'emojiDelete',
-    'emojiUpdate', 'error', 'guildBanAdd', 'guildBanRemove', 'guildCreate', 'guildDelete', 'guildIntegrationsUpdate',
-    'guildMemberAdd', 'guildMemberAvailable', 'guildMemberRemove', 'guildMembersChunk', 'guildMemberUpdate',
-    'guildScheduledEventCreate', 'guildScheduledEventDelete', 'guildScheduledEventUpdate', 'guildScheduledEventUserAdd',
-    'guildScheduledEventUserRemove', 'guildUnavailable', 'guildUpdate', 'interaction', 'interactionCreate', 'invalidated',
-    'invalidRequestWarning', 'inviteCreate', 'inviteDelete', 'message', 'messageCreate', 'messageDelete', 'messageDeleteBulk',
-    'messageReactionAdd', 'messageReactionRemove', 'messageReactionRemoveAll', 'messageReactionRemoveEmoji', 'messageUpdate',
-    'presenceUpdate', 'rateLimit', 'ready', 'roleCreate', 'roleDelete', 'roleUpdate', 'shardDisconnect', 'shardError',
-    'shardReady', 'shardReconnecting', 'shardResume', 'stageInstanceCreate', 'stageInstanceDelete', 'stageInstanceUpdate',
-    'stickerCreate', 'stickerDelete', 'stickerUpdate', 'threadCreate', 'threadDelete', 'threadListSync', 'threadMembersUpdate',
-    'threadMemberUpdate', 'threadUpdate', 'typingStart', 'userUpdate', 'voiceStateUpdate', 'warn', 'webhookUpdate'
-];
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-export default async (client) => {   
-    // Chemin complet vers le répertoire contenant les fichiers d'événements
-    const allEventsPath = process.cwd() + "/src/events";
 
-    // Liste tous les noms de fichiers dans le répertoire des événements
-    const allEventsFileName = readdirSync(allEventsPath);
+export default async (client) => {
 
-    // Parcourt chaque nom de fichier d'événement
-    for (const eventFile of allEventsFileName) {
-        // Importe l'événement depuis son fichier de manière dynamique
-        const eventModule= await import(`${allEventsPath}/${eventFile}`);
-        const event = eventModule.default;
-    
-        // Vérifie si l'événement est dans la liste des événements autorisés et s'il a un nom
-        if (!eventList.includes(event.name) || !event.name) {
-            console.log(`-----\nÉvénement non-déclenché \nFichier -> ${eventFile}\n-----`);
-            continue;
-        }
+    const eventsPath = path.join(__dirname, '../../Events');
 
-        console.log(chalk.green("Événement chargé : " + event.name));
-        
-        // Si l'événement doit être exécuté une seule fois
-        if (event.once) {
-            client.once(event.name, (...args) => event.execute(client, ...args));
-        } else {
-            client.on(event.name, (...args) => event.execute(client, ...args));
+    // Vérifie si le dossier existe pour éviter un crash
+    if (!fs.existsSync(eventsPath)) {
+        console.log(chalk.red(`[ERREUR] Le dossier Events est introuvable au chemin : ${eventsPath}`));
+        return;
+    }
+
+    const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
+
+    for (const file of eventFiles) {
+        const filePath = path.join(eventsPath, file);
+
+        try {
+            const eventModule = await import(`file://${filePath}`);
+
+            const event = eventModule.default;
+
+            if (!event || !event.name || !event.execute) {
+                console.log(chalk.yellow(`⚠️  Fichier ignoré (structure incorrecte) -> ${file}`));
+                continue;
+            }
+
+            if (event.once) {
+                client.once(event.name, (...args) => event.execute(...args));
+            } else {
+                client.on(event.name, (...args) => event.execute(...args));
+            }
+
+            console.log(chalk.green(`Événement chargé : ${event.name}`));
+
+        } catch (error) {
+            console.error(chalk.red(`Erreur lors du chargement de ${file}:`), error);
         }
     }
 };
